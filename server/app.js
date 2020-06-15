@@ -7,6 +7,20 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
+const models = require('./models')
+models.sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connected to SQL database:', 'graphql-mysql-starter')
+    })
+    .catch((err) => {
+        console.error(
+            'Unable to connect to SQL database:',
+            'graphql-mysql-starter',
+            err,
+        )
+    })
+
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.listen({ port: 5000 }, () =>
