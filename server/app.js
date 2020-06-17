@@ -1,6 +1,7 @@
 import '@babel/polyfill'
 import express from 'express'
 const bodyParser = require('body-parser')
+const { ApolloServer } = require('apollo-server-express')
 const cors = require('cors')
 const app = express()
 app.use(bodyParser.json())
@@ -20,6 +21,12 @@ models.sequelize
             err,
         )
     })
+
+const server = new ApolloServer({
+    modules: [require('./app/GraphQL/users')],
+})
+
+server.applyMiddleware({ app })
 
 app.get('/', (req, res) => res.send('Hello World!'))
 

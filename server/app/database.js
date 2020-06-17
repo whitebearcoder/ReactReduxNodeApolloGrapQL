@@ -15,11 +15,10 @@ const sequelize = new Sequelize('graphql-mysql-starter', 'root', '', {
         acquire: 30000,
         idle: 10000,
     },
-    // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
     operatorsAliases: false,
 })
 
-let models = [require('./models/users.js')]
+let models = [require('../models/users.js')]
 
 // Initialize models
 models.forEach((model) => {
