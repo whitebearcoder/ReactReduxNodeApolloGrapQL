@@ -1,39 +1,29 @@
-import { gql } from 'apollo-server-express'
-import * as db from '../database'
+import { gql } from 'apollo-server-express';
+import * as db from '../database';
 
 export const typeDefs = gql`
-    extend type Query {
-        users: [User]
-        user(id: ID!): User
-    }
+  extend type Query {
+    users: [User]
+    user(id: ID!): User
+  }
 
-    type User {
-        id: ID!
-        email: String
-        name: String
-    }
+  type User {
+    id: ID!
+    email: String
+    name: String
+  }
 
-    input UserInput {
-        name: String
-        email: String
-    }
-
-    type Mutation {
-        createUser(name: String!, email: String!): User
-    }
-`
+  input UserInput {
+    name: String
+    email: String
+  }
+`;
 
 export const resolvers = {
-    Query: {
-        users: async () => {
-            console.log('**************')
-            return await db.users.findAll()
-        },
-        user: async (obj, args, context, info) => User.findByPk(args.id),
+  Query: {
+    users: async () => {
+      return await db.users.findAll();
     },
-    Mutation: {
-        createUser: (obj, args, context, info) => {
-            return User.create({ ...args })
-        },
-    },
-}
+    user: async (obj, args, context, info) => db.users.findByPk(args.id),
+  },
+};
