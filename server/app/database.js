@@ -1,39 +1,39 @@
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
 
-var db = {}
+var db = {};
 
 const sequelize = new Sequelize('graphql-mysql-starter', 'root', '', {
-    host: 'localhost',
-    port: '3306',
-    dialect: 'mysql',
-    define: {
-        freezeTableName: true,
-    },
-    pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000,
-    },
-    operatorsAliases: false,
-})
+  host: 'localhost',
+  port: '3306',
+  dialect: 'mysql',
+  define: {
+    freezeTableName: true,
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+  operatorsAliases: false,
+});
 
-let models = [require('../models/users.js')]
+let models = [require('../models/users.js')];
 
 // Initialize models
 models.forEach((model) => {
-    const seqModel = model(sequelize, Sequelize)
-    db[seqModel.name] = seqModel
-})
+  const seqModel = model(sequelize, Sequelize);
+  db[seqModel.name] = seqModel;
+});
 
 // Apply associations
 Object.keys(db).forEach((key) => {
-    if ('associate' in db[key]) {
-        db[key].associate(db)
-    }
-})
+  if ('associate' in db[key]) {
+    db[key].associate(db);
+  }
+});
 
-db.sequelize = sequelize
-db.Sequelize = Sequelize
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-module.exports = db
+module.exports = db;
